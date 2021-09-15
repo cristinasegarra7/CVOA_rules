@@ -14,7 +14,7 @@ class CVOA:
     P_TRAVEL = 0.1
     P_REINFECTION = 0.001
     SUPERSPREADER_PERC = 0.1
-    DEATH_PERC = 0.07 
+    DEATH_PERC = 0.06 
 
     def __init__(self, max_time, data, lim_down, lim_up, n_solutions):
         self.infected = []
