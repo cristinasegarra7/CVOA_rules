@@ -1,6 +1,5 @@
 import pandas as pd
 from cvoa2 import CVOA
-from time import time, sleep
 from rule_support_function import ruleSupport
 import multiprocessing as mp
 import numpy as np
@@ -21,7 +20,7 @@ class CVOA:
     P_TRAVEL = 0.1
     P_REINFECTION = 0.001
     SUPERSPREADER_PERC = 0.1
-    DEATH_PERC = 0.15 
+    DEATH_PERC = 0.06 
 
     def __init__(self, max_time, data, lim_down, lim_up, n_solutions):
         self.infected = []
