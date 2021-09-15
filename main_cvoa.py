@@ -3,7 +3,7 @@ from cvoa2 import CVOA
 import time as time
 from rule_support_function import ruleSupport
 
-data = pd.read_csv('terremotos_data.csv', sep = ';')
+data = pd.read_csv('earthquake_data.csv', sep = ';')
 
 best_solutions=[]
 best_values=[]
