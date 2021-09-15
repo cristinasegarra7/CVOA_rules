@@ -8,7 +8,7 @@ import sys as sys
 import random as random
 from individual import Individual
 
-data = pd.read_csv('terremotos_data.csv', sep = ';')
+data = pd.read_csv('earthquake_data.csv', sep = ';')
 
 class CVOA:
     MIN_SPREAD = 0
