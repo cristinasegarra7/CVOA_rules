@@ -27,14 +27,6 @@ class CVOA:
         self.lim_up = lim_up
         self.n_solutions = n_solutions
         self.bestSolutions = []
-        self.VACCINATION = 8
-
-    def vaccinationRate(self, time):
-        if time < 36:
-            vaccination_rate = 5.11991750e-04*(time*7)+1.07728613e-06**(time*7)**2+1.71589004e-07*(time*7)**3-5.37069705e-10*(time*7)**4
-        else:
-            vaccination_rate = 0.8
-        return vaccination_rate
     
     def propagateDisease(self, time):
         new_infected_list = []
@@ -84,6 +76,7 @@ class CVOA:
             # Step 5.1 If the individual belongs to the death part, then die!
             if i >= idx_deaths:
                 self.deaths.append(x)
+                self.infected.remove(x)
             else:
                 # Step 5.2 Determine the number of new infected individuals.
                 if i < idx_super_spreader:  # This is the super-spreader!
@@ -111,7 +104,7 @@ class CVOA:
                             if random.random() < self.P_REINFECTION:
                                 new_infected_list.append(new_infected)
                                 self.recovered.remove(new_infected)
-                    elif time < self.VACCINATION: # After SOCIAL_DISTANCING iterations, there is a P_ISOLATION of not being
+                    else: # After SOCIAL_DISTANCING iterations, there is a P_ISOLATION of not being infected
                         if random.random() > self.P_ISOLATION:
                             if new_infected not in self.deaths and new_infected not in self.infected and new_infected not in new_infected_list and new_infected not in self.recovered:
                                 new_infected_list.append(new_infected)
@@ -122,23 +115,12 @@ class CVOA:
                         else: # Those saved by social distancing are sent to the recovered list
                             if new_infected not in self.deaths and new_infected not in self.infected and new_infected not in new_infected_list and new_infected not in self.recovered:
                                 self.recovered.append(new_infected)
-                    else: # After SOCIAL_DISTANCING iterations and VACCINATION iterations
-                        if (random.random() > self.P_ISOLATION) and (random.random() > self.vaccinationRate(time)):
-                            if new_infected not in self.deaths and new_infected not in self.infected and new_infected not in new_infected_list and new_infected not in self.recovered:
-                                new_infected_list.append(new_infected)
-                            elif new_infected in self.recovered and new_infected not in new_infected_list:
-                                if random.random() < self.P_REINFECTION:
-                                    new_infected_list.append(new_infected)
-                                    self.recovered.remove(new_infected)
-                        else: # Those saved by social distancing or vaccine are sent to the recovered list
-                            if new_infected not in self.deaths and new_infected not in self.infected and new_infected not in new_infected_list and new_infected not in self.recovered:
-                                self.recovered.append(new_infected)
             i+=1
+            
         # Step 6. Add the current infected individuals to the recovered list.
         self.recovered.extend(self.infected)
         # Step 7. Update the infected list with the new infected individuals.
         self.infected = new_infected_list
-    
     
     def run(self):
         epidemic = True
@@ -158,7 +140,6 @@ class CVOA:
             print("Best individual: ", self.bestSolutions[0].kintegers)
             print("Infected: ", str(len(self.infected)), "; Recovered: ", str(len(self.recovered)), "; Deaths: ", str(len(self.deaths)))
             print("Recovered/Infected: " + str("{:.4f}".format(100 * ((len(self.recovered)) / (len(self.infected)+0.01))) + "%"))
-            print("vaccine_rate: " + str(self.VACCINE_RATE(time)))
             if not self.infected:
                 epidemic = False
             time += 1
