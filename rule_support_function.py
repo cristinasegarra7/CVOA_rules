@@ -1,9 +1,5 @@
 # Función soporte regla
 
-#import pandas as pd
-
-#data = pd.read_csv('terremotos_data.csv', sep = ';')
-
 def ruleSupport(data, individual_values, lim_down, lim_up):
     support_ant = 0
     support_cons = 0
