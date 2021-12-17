@@ -1,4 +1,4 @@
-# CVOA_rules
+# CVOA_rules_vaccine
 Optimization algorithm based on the coronavirus for numerical association rules mining
 
 Here you have the implementation of CVOA for numerical association rules. You can run one or several strains. The lower and upper limits of the consequent of the rule are CVOA parameters that must be specified. As well as the number of solutions returned by the algorithm.
